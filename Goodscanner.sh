@@ -43,6 +43,6 @@ echo "Ports found -- initiating deep scan, timestamp: "$timestamp""
 
 # Enumerate the services, Os, and script scan on the open ports using the -A option and -p "$open_ports" to scan only open ports.
 nmap -A -vv -oG scan."ip_address".txt -p "$open_ports" "$ip_address"
-print(\n)
+echo -e "\n"
 timestamp=$(date)
 echo "Deep scan successful, timestamp: "$timestamp""
