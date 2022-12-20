@@ -16,10 +16,10 @@ if [[ $ip_address =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
   if [[ $o1 -ge 0 && $o1 -le 255 ]] && [[ $o2 -ge 0 && $o2 -le 255 ]] && [[ $o3 -ge 0 && $o3 -le 255 ]] && [[ $o4 -ge 0 && $o4 -le 255 ]]; then
     echo "Valid IP address -- wait for the script to return results"
   else
-    echo "Invalid IP address -- please insert a valid ip address" && exit
+    echo "Invalid IP address -- please provide a valid IP address" && exit
   fi
 else
-  echo "Invalid IP address -- please insert a valid ip address" && exit
+  echo "Invalid IP address -- please provide a valid IP address" && exit
 fi
 
 # Echo starting scan
