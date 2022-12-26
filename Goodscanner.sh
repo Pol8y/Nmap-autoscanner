@@ -37,7 +37,7 @@ echo "Initial Scan Started on: "$timestamp" -- waiting for ports"
 # Scan the IP address using the -T4, and -vv options for maximum speed and verbosity, then grep lines that contains "open ports", cut after /, 
 # cut the fourth column that contains the port, translate newlines to commas, and finally remove commas from the end of the lines, leaving nothig but port number.
 
-open_ports=$(nmap $pn_option -T4 -vv -oG sweep."$ip_address".txt -p- "$ip_address" | grep "open port" | cut -d'/' -f1 | cut -d" " -f4 | tr '\n' ',' | sed 's/,$//')
+open_ports=$(nmap $pn_option -T4 -vv -oN sweep."$ip_address".txt -p- "$ip_address" | grep "open port" | cut -d'/' -f1 | cut -d" " -f4 | tr '\n' ',' | sed 's/,$//')
 
 # Check if open_ports is empty
 if [ -z $open_ports ]
@@ -53,11 +53,11 @@ elapsedtime=$((t2-t1))
 echo "Initial Scan completed in $elapsedtime seconds"
 
 # Enumerate the services, Os, and script scan on the open ports using the -A option and -p "$open_ports" to scan only open ports.
-nmap $pn_option -A -vv -oG scan."$ip_address".txt -p "$open_ports" "$ip_address"
+nmap $pn_option -A -vv -oN scan."$ip_address".txt -p "$open_ports" "$ip_address"
 echo -e "\n"
 t3=$(date +%s)
-elapsedtime=((t3-t2))
-totaltime=((t3-t1))
+elapsedtime=$((t3-t2))
+totaltime=$((t3-t1))
 timestamp=$(date)
 echo "Deep scan successful, completed in "$elapsedtime" seconds, timestamp: "$timestamp""
 echo "Full scan took "$totaltime" seconds to complete"
