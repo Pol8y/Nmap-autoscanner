@@ -32,6 +32,10 @@ fi
 # Echo starting scan
 timestamp=$(date)
 t1=$(date +%s)
+echo "Common Ports Scan Initiated"
+nmap $pn_option -T4 -sC -sV -vv -oN common."$ip_address".txt -p "$ip_address"
+t2=$(date +%s)
+# Echo starting scan
 echo "Initial Scan Started on: "$timestamp" -- waiting for ports"
 
 # Scan the IP address using the -T4, and -vv options for maximum speed and verbosity, then grep lines that contains "open ports", cut after /, 
@@ -48,16 +52,16 @@ fi
 # Echo second scan
 timestamp=$(date)
 echo "Ports found -- initiating deep scan, timestamp: "$timestamp""
-t2=$(date +%s)
+t3=$(date +%s)
 elapsedtime=$((t2-t1))
 echo "Initial Scan completed in $elapsedtime seconds"
 
 # Enumerate the services, Os, and script scan on the open ports using the -A option and -p "$open_ports" to scan only open ports.
 nmap $pn_option -A -vv -oN scan."$ip_address".txt -p "$open_ports" "$ip_address"
 echo -e "\n"
-t3=$(date +%s)
-elapsedtime=$((t3-t2))
-totaltime=$((t3-t1))
+t4=$(date +%s)
+elapsedtime=$((t4-t3))
+totaltime=$((t4-t1))
 timestamp=$(date)
 echo "Deep scan successful, completed in "$elapsedtime" seconds, timestamp: "$timestamp""
 echo "Full scan took "$totaltime" seconds to complete"
