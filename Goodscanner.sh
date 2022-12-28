@@ -33,7 +33,7 @@ fi
 timestamp=$(date)
 t1=$(date +%s)
 echo "Common Ports Scan Initiated"
-nmap $pn_option -T4 -sC -sV -vv -oN common."$ip_address".txt -p "$ip_address"
+nmap $pn_option -T4 -sC -sV -vv -oN common."$ip_address".txt "$ip_address"
 t2=$(date +%s)
 elapsedtime=$((t2-t1))
 echo "Common Port scanned in $elapsedtime seconds, waiting for Initial Scan"
