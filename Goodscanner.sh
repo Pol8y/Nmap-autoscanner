@@ -30,13 +30,19 @@ else
 fi
 
 # Ask the user for the path to save the files
-echo "Please enter the path to the folder where you want to save the scan files:"
+echo "Please enter the path to the folder where you want to save the scan files, leave blank to save to current directory:"
 read -e save_path
 
-# Check if the folder exists
-if [ ! -d "$save_path" ]; then
-  # If the folder doesn't exist, create it
-  mkdir "$save_path"
+# Check if the user provided a folder
+if [ -z "$save_path" ]; then
+  # If the user didn't provide a folder, save the files to the current directory
+  save_path="./"
+else
+  # If the user provided a folder, check if it exists
+  if [ ! -d "$save_path" ]; then
+    # If the folder doesn't exist, create it
+    mkdir "$save_path"
+  fi
 fi
 
 # Echo starting scan
