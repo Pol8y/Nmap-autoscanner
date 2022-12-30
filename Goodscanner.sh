@@ -29,11 +29,20 @@ else
   echo "Invalid IP address -- please provide a valid IP address" && exit
 fi
 
+echo "Please enter the path to the folder where you want to save the scan files:"
+read -e save_path
+
+# Check if the folder exists
+if [ ! -d "$save_path" ]; then
+  # If the folder doesn't exist, create it
+  mkdir "$save_path"
+fi
+
 # Echo starting scan
 timestamp=$(date)
 t1=$(date +%s)
 echo "Common Ports Scan Initiated"
-nmap $pn_option -T4 -sC -sV -vv -oN common."$ip_address".txt "$ip_address"
+nmap $pn_option -T4 -sC -sV -vv -oN "$save_path"/common."$ip_address".txt "$ip_address"
 t2=$(date +%s)
 elapsedtime=$((t2-t1))
 echo "Common Port scanned in $elapsedtime seconds, waiting for Initial Scan"
@@ -43,7 +52,7 @@ echo "Initial Scan Started on: "$timestamp" -- waiting for ports"
 # Scan the IP address using the -T4, and -vv options for maximum speed and verbosity, then grep lines that contains "open ports", cut after /, 
 # cut the fourth column that contains the port, translate newlines to commas, and finally remove commas from the end of the lines, leaving nothig but port number.
 
-open_ports=$(nmap $pn_option -T4 -vv -oN sweep."$ip_address".txt -p- "$ip_address" | grep "open port" | cut -d'/' -f1 | cut -d" " -f4 | tr '\n' ',' | sed 's/,$//')
+open_ports=$(nmap $pn_option -T4 -vv -oN "$save_path"/sweep."$ip_address".txt -p- "$ip_address" | grep "open port" | cut -d'/' -f1 | cut -d" " -f4 | tr '\n' ',' | sed 's/,$//')
 
 # Check if open_ports is empty
 if [ -z $open_ports ]
@@ -59,7 +68,7 @@ elapsedtime=$((t2-t1))
 echo "Initial Scan completed in $elapsedtime seconds"
 
 # Enumerate the services, Os, and script scan on the open ports using the -A option and -p "$open_ports" to scan only open ports.
-nmap $pn_option -A -vv -oN scan."$ip_address".txt -p "$open_ports" "$ip_address"
+nmap $pn_option -A -vv -oN "$save_path"/scan."$ip_address".txt -p "$open_ports" "$ip_address"
 echo -e "\n"
 t4=$(date +%s)
 elapsedtime=$((t4-t3))
