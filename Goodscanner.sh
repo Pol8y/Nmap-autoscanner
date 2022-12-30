@@ -29,6 +29,7 @@ else
   echo "Invalid IP address -- please provide a valid IP address" && exit
 fi
 
+# Ask the user for the path to save the files
 echo "Please enter the path to the folder where you want to save the scan files:"
 read -e save_path
 
