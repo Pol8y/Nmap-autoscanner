@@ -1,5 +1,19 @@
 #!/bin/bash
 
+#_______________REQUIREMENTS_____________
+#This script uses nmap and ipcalc
+#installation:
+#sudo apt update
+#sudo apt install nmap
+#sudo apt install ipcalc
+#be sure to be root for the installation
+#________________________________________
+#Usage:
+#chmod +x Goodscanner.sh
+#./Goodscanner <ipaddress>
+#or for no ping option (mostly windows targets)
+#./Goodscanner <ipaddress> -Pn
+
 # Check if IP address was provided
 ip_address="$1"
 if [ -z $ip_address ]
